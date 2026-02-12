@@ -4,6 +4,7 @@ dotenv.config();
 
 export const env = {
     PORT: process.env.PORT || 3000,
+    FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:5173',
     MONGODB_CLOUD_URI: process.env.MONGODB_CLOUD_URI!,
     MONGODB_URI: process.env.MONGODB_URI!,
     DB_NAME: process.env.DB_NAME || "test",
