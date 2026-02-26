@@ -1,6 +1,9 @@
 import { MemberRepository } from "../repositories/member.repository";
 import { comparePassword } from "../../../shared/utils/hash";
-import { generateAccessToken } from "../../../shared/utils/jwt";
+import {
+    generateAccessToken,
+    generateRefreshToken,
+} from "../../../shared/utils/jwt";
 import { AppError } from "../../../shared/errors/app.error";
 
 export class LoginUseCase {
@@ -19,8 +22,19 @@ export class LoginUseCase {
             throw new AppError("Invalid credentials", 401);
         }
 
-        const token = generateAccessToken({ id: user.id });
+        const accessToken = generateAccessToken({ id: user.id });
+        const refreshToken = generateRefreshToken({ id: user.id });
 
-        return { accessToken: token };
+        await this.repository.updateRefreshToken(user.id, refreshToken);
+
+        return {
+            accessToken,
+            refreshToken,
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+            }
+        };
     }
 }

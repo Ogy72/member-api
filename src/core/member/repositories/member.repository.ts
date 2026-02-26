@@ -9,4 +9,5 @@ export interface MemberRepository {
     findByEmail(email: string): Promise<Member | null>;
     update(id: string, data: Partial<Member>): Promise<Member | null>;
     delete(id: string): Promise<void>;
+    updateRefreshToken(id: string, token: string): Promise<void>;
 }

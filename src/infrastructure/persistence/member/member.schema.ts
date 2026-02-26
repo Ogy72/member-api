@@ -15,6 +15,9 @@ const memberSchema = new Schema({
         password: {
             type: String,
             required: true,
+        },
+        refreshToken: {
+            type: String,
         }
     },
     { timestamps: true }

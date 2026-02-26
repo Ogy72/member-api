@@ -83,6 +83,7 @@ export class MemberMongoRepository implements MemberRepository {
             name: doc.name,
             email: doc.email,
             password: doc.password,
+            refreshToken: doc.refreshToken ?? undefined,
             createdAt: doc.createdAt.toISOString()
         };
     };
@@ -96,6 +97,7 @@ export class MemberMongoRepository implements MemberRepository {
             name: doc.name,
             email: doc.email,
             password: doc.password,
+            refreshToken: doc.refreshToken ?? undefined,
             createdAt: doc.createdAt.toISOString()
         }
     }
@@ -115,5 +117,11 @@ export class MemberMongoRepository implements MemberRepository {
 
     async delete(id: string): Promise<void> {
         await MemberModel.findByIdAndDelete(id);
+    }
+
+    async updateRefreshToken(id: string, token: string): Promise<void> {
+        await MemberModel.findByIdAndUpdate(id, {
+            refreshToken: token,
+        })
     }
 }

@@ -10,5 +10,7 @@ export const env = {
     DB_NAME: process.env.DB_NAME || "test",
     MONGO_FALLBACK_ENABLED: process.env.MONGO_FALLBACK_ENABLED === "true",
     JWT_SECRET: process.env.JWT_SECRET as string,
-    JWT_EXPIRES: process.env.JWT_EXPIRES as string,
+    JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET as string,
+    JWT_EXPIRES: process.env.JWT_EXPIRES as string || '15m',
+    JWT_REFRESH_EXPIRES: process.env.JWT_EXPIRES as string || '7d',
 }
