@@ -31,5 +31,10 @@ router.delete("/:id",
     asyncHandler(controller.delete.bind(controller))
 );
 
+router.get("/me",
+    authMiddleware,
+    asyncHandler(controller.me.bind(controller)),
+)
+
 
 export default router;

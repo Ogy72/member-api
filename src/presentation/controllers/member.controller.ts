@@ -6,8 +6,9 @@ import type { GetMembersUseCase } from "../../core/member/usecases/get-member-us
 import type { CreateMemberUseCase } from "../../core/member/usecases/create-member.usecase";
 import type { UpdateMemberUseCase } from "../../core/member/usecases/update-member.usecase";
 import type { DeleteMemberUseCase } from "../../core/member/usecases/delete-member.usecase";
+import type { GetMeUseCase } from "../../core/member/usecases/get-me.usecase";
 import {QueryOptions} from "../types/query-options.type";
-import {Member} from "../../core/member/domain/member.entity";
+import {AuthRequest} from "../middlewares/auth.middleware";
 
 export class MemberController {
     constructor(
@@ -15,13 +16,8 @@ export class MemberController {
         private createMemberUseCase: CreateMemberUseCase,
         private updateMemberUseCase: UpdateMemberUseCase,
         private deleteMemberUseCase: DeleteMemberUseCase,
+        private getMeUseCase: GetMeUseCase
     ) {};
-
-    // async getAll(req: Request, res: Response) {
-    //
-    //     const members = await this.getMemberUseCase.execute();
-    //     res.json(members);
-    // };
 
     async getAll(
         req: Request<{}, {}, {}, QueryOptions>,
@@ -61,6 +57,11 @@ export class MemberController {
     async delete(req: Request<IdParams>, res: Response) {
         await this.deleteMemberUseCase.execute(req.params.id);
         res.status(204).send();
+    }
+
+    async me(req: AuthRequest, res: Response) {
+        const user = await this.getMeUseCase.execute(req.user!.id)
+        res.json(user);
     }
 
 

@@ -2,24 +2,30 @@ import { Request, Response, NextFunction } from 'express';
 import { verifyAccessToken } from "../../shared/utils/jwt";
 import { AppError } from "../../shared/errors/app.error";
 
+export interface AuthRequest extends Request {
+    user?: {
+        id: string;
+    }
+}
+
 export const authMiddleware = (
-    req: Request,
-    res: Response,
+    req: AuthRequest,
+    _res: Response,
     next: NextFunction
 )=> {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
         throw new AppError("Unauthorized", 401);
     }
 
     const token = authHeader.split(" ")[1];
 
     try {
-        const payload = verifyAccessToken(token);
+        const payload = verifyAccessToken(token) as { id: string };
 
         // Save verify result on request
-        ;(req as any).user = payload;
+        req.user = { id: payload.id };
 
         next()
     } catch {
