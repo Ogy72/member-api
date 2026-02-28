@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { buildAuthController } from "../modules/auth.module";
 import { asyncHandler } from "../../shared/utils/asyncHandler";
+import {authMiddleware} from "../middlewares/auth.middleware";
 
 const router = Router();
 const controller = buildAuthController();
@@ -10,6 +11,12 @@ router.post(
     "/login",
     asyncHandler(controller.login.bind(controller)),
 );
+
+router.post(
+    "/logout",
+    // authMiddleware,
+    asyncHandler(controller.logout.bind(controller)),
+)
 
 router.post(
     "/refresh",

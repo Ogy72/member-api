@@ -5,14 +5,6 @@ export const generateAccessToken = (payload: object): string => {
     return jwt.sign(payload, env.JWT_SECRET as Secret, {
         expiresIn: env.JWT_EXPIRES
     } as SignOptions);
-
-    // const secret: Secret = env.JWT_SECRET;
-    //
-    // const options: SignOptions = {
-    //     expiresIn: env.JWT_EXPIRES as SignOptions['expiresIn'],
-    // };
-
-    // return jwt.sign(payload, secret, options);
 }
 
 export const generateRefreshToken = (payload: object): string => {

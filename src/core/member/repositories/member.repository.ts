@@ -10,4 +10,5 @@ export interface MemberRepository {
     update(id: string, data: Partial<Member>): Promise<Member | null>;
     delete(id: string): Promise<void>;
     updateRefreshToken(id: string, token: string): Promise<void>;
+    clearRefreshToken(id: string): Promise<void>;
 }

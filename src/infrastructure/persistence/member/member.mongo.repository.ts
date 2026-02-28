@@ -17,17 +17,6 @@ export class MemberMongoRepository implements MemberRepository {
         };
     };
 
-    // async findAll(): Promise<Member[]> {
-    //     const docs = await MemberModel.find()
-    //
-    //     return docs.map(doc => ({
-    //         id: doc._id.toString(),
-    //         name: doc.name,
-    //         email: doc.email,
-    //         createdAt: doc.createdAt.toISOString()
-    //     }));
-    // };
-
     async findAll(options: QueryOptions): Promise<PaginationResult<Member>> {
         const {
             page = 1,
@@ -122,6 +111,12 @@ export class MemberMongoRepository implements MemberRepository {
     async updateRefreshToken(id: string, token: string): Promise<void> {
         await MemberModel.findByIdAndUpdate(id, {
             refreshToken: token,
+        })
+    }
+
+    async clearRefreshToken(id: string): Promise<void> {
+        await MemberModel.findByIdAndUpdate(id, {
+            $unset: { refreshToken:  "" },
         })
     }
 }
