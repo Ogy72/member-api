@@ -9,6 +9,7 @@ import type { DeleteMemberUseCase } from "../../core/member/usecases/delete-memb
 import type { GetMeUseCase } from "../../core/member/usecases/get-me.usecase";
 import {QueryOptions} from "../../core/types/query-options.type";
 import {AuthRequest} from "../middlewares/auth.middleware";
+import {toMemberResponse} from "../../core/member/dto/member-response.dto";
 
 export class MemberController {
     constructor(
@@ -31,20 +32,27 @@ export class MemberController {
         //     sortOrder: req.query.sortOrder as 'asc' | 'desc',
         // });
 
-        const result = await this.getMemberUseCase.execute(req.query as QueryOptions);
+        const query = res.locals.validateQuery as QueryOptions;
+        const result = await this.getMemberUseCase.execute(query);
 
-        res.json(result);
+        // res.json(result);
+
+        res.json({
+            ...result,
+            data: result.data.map(toMemberResponse),
+        });
     }
 
     async create(req: Request, res: Response) {
         const data: CreateMemberDto = req.body;
-        const create = await this.createMemberUseCase.execute(
+        const created = await this.createMemberUseCase.execute(
             data.name,
             data.email,
             data.password
         );
 
-        res.status(201).json(create);
+        // res.status(201).json(create);
+        res.status(201).json(toMemberResponse(created));
     };
 
     async update(req: Request<IdParams>, res: Response) {
@@ -53,7 +61,8 @@ export class MemberController {
             req.params.id,
             data,
         );
-        res.json(updated);
+
+        res.json(toMemberResponse(updated));
     }
 
     async delete(req: Request<IdParams>, res: Response) {

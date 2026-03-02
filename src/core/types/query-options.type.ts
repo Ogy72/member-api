@@ -1,7 +1,3 @@
-export interface QueryOptions {
-    page: number;
-    limit: number;
-    search?: string;
-    sortBy: "name" | "email" | "createdAt";
-    sortOrder?: "asc" | "desc";
-}
+import { GetMembersQueryDto } from "../member/dto/get-members-query.dto";
+
+export type QueryOptions = GetMembersQueryDto;
