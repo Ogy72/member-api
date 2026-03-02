@@ -1,6 +1,6 @@
 import { Member } from "../domain/member.entity";
-import {QueryOptions} from "../../../presentation/types/query-options.type";
-import {PaginationResult} from "../../../presentation/types/pagination.type";
+import {QueryOptions} from "../../types/query-options.type";
+import {PaginationResult} from "../../types/pagination.type";
 
 export interface MemberRepository {
     create(data: { name: string; email: string; password: string }): Promise<Member>;

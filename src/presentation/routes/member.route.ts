@@ -5,6 +5,8 @@ import {createMemberSchema} from "../../core/member/dto/create-member.dto";
 import {updateMemberSchema} from "../../core/member/dto/update-member.dto";
 import {buildMemberController} from "../modules/member.module";
 import {authMiddleware} from "../middlewares/auth.middleware";
+import { validateQuery } from "../middlewares/validate-query.middleware";
+import { getMembersQuerySchema } from "../../core/member/dto/get-members-query.dto";
 
 const router = Router();
 const controller = buildMemberController();
@@ -12,6 +14,7 @@ const controller = buildMemberController();
 // Route Handler
 router.get('/',
     authMiddleware,
+    validateQuery(getMembersQuerySchema),
     asyncHandler(controller.getAll.bind(controller))
 );
 

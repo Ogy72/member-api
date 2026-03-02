@@ -1,7 +1,7 @@
 export interface QueryOptions {
-    page?: number;
-    limit?: number;
+    page: number;
+    limit: number;
     search?: string;
-    sortBy?: string;
+    sortBy: "name" | "email" | "createdAt";
     sortOrder?: "asc" | "desc";
 }

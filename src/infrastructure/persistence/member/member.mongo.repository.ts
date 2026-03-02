@@ -1,8 +1,8 @@
 import { MemberRepository } from "../../../core/member/repositories/member.repository";
 import { Member } from "../../../core/member/domain/member.entity";
 import { MemberModel } from "./member.schema";
-import {QueryOptions} from "../../../presentation/types/query-options.type";
-import {PaginationResult} from "../../../presentation/types/pagination.type";
+import {QueryOptions} from "../../../core/types/query-options.type";
+import {PaginationResult} from "../../../core/types/pagination.type";
 
 export class MemberMongoRepository implements MemberRepository {
     async create(data: { name: string; email: string; password: string }): Promise<Member> {
@@ -59,6 +59,9 @@ export class MemberMongoRepository implements MemberRepository {
             total,
             page,
             limit,
+            search,
+            sortBy,
+            sortOrder,
             totalPages: Math.ceil(total/limit)
         };
     };

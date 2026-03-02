@@ -7,7 +7,7 @@ import type { CreateMemberUseCase } from "../../core/member/usecases/create-memb
 import type { UpdateMemberUseCase } from "../../core/member/usecases/update-member.usecase";
 import type { DeleteMemberUseCase } from "../../core/member/usecases/delete-member.usecase";
 import type { GetMeUseCase } from "../../core/member/usecases/get-me.usecase";
-import {QueryOptions} from "../types/query-options.type";
+import {QueryOptions} from "../../core/types/query-options.type";
 import {AuthRequest} from "../middlewares/auth.middleware";
 
 export class MemberController {
@@ -23,13 +23,15 @@ export class MemberController {
         req: Request<{}, {}, {}, QueryOptions>,
         res: Response,
     ) {
-        const result = await this.getMemberUseCase.execute({
-            page: Number(req.query.page) || 1,
-            limit: Number(req.query.limit),
-            search: req.query.search,
-            sortBy: req.query.sortBy,
-            sortOrder: req.query.sortOrder as 'asc' | 'desc',
-        });
+        // const result = await this.getMemberUseCase.execute({
+        //     page: Number(req.query.page) || 1,
+        //     limit: Number(req.query.limit),
+        //     search: req.query.search,
+        //     sortBy: req.query.sortBy,
+        //     sortOrder: req.query.sortOrder as 'asc' | 'desc',
+        // });
+
+        const result = await this.getMemberUseCase.execute(req.query as QueryOptions);
 
         res.json(result);
     }
