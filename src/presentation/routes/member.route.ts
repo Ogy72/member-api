@@ -3,6 +3,7 @@ import {asyncHandler} from "../../shared/utils/asyncHandler";
 import {validate} from "../middlewares/validate.middleware";
 import {createMemberSchema} from "../../core/member/dto/create-member.dto";
 import {updateMemberSchema} from "../../core/member/dto/update-member.dto";
+import { bulkDeleteMemberSchema } from "../../core/member/dto/bulk-delete-member.dto";
 import {buildMemberController} from "../modules/member.module";
 import {authMiddleware} from "../middlewares/auth.middleware";
 import { validateQuery } from "../middlewares/validate-query.middleware";
@@ -28,6 +29,12 @@ router.patch("/:id",
     validate(updateMemberSchema),
     asyncHandler(controller.update.bind(controller))
 );
+
+router.delete("/bulk",
+    authMiddleware,
+    validate(bulkDeleteMemberSchema),
+    asyncHandler(controller.bulkDelete.bind(controller))
+)
 
 router.delete("/:id",
     authMiddleware,

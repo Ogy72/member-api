@@ -12,5 +12,5 @@ export const env = {
     JWT_SECRET: process.env.JWT_SECRET as string,
     JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET as string,
     JWT_EXPIRES: process.env.JWT_EXPIRES as string || '15m',
-    JWT_REFRESH_EXPIRES: process.env.JWT_EXPIRES as string || '7d',
+    JWT_REFRESH_EXPIRES: process.env.JWT_REFRESH_EXPIRES as string || '7d',
 }

@@ -7,8 +7,10 @@ export interface MemberRepository {
     findAll(options: QueryOptions): Promise<PaginationResult<Member>>;
     findById(id: string): Promise<Member | null>;
     findByEmail(email: string): Promise<Member | null>;
+    findExistingIds(ids: string[]): Promise<string[]>;
     update(id: string, data: Partial<Member>): Promise<Member | null>;
     delete(id: string): Promise<void>;
+    bulkDelete(ids: string[]): Promise<number>;
     updateRefreshToken(id: string, token: string): Promise<void>;
     clearRefreshToken(id: string): Promise<void>;
 }

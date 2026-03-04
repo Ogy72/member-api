@@ -56,13 +56,15 @@ export class MemberMongoRepository implements MemberRepository {
                 password: doc.password,
                 createdAt: doc.createdAt.toISOString()
             })),
-            total,
-            page,
-            limit,
-            search,
-            sortBy,
-            sortOrder,
-            totalPages: Math.ceil(total/limit)
+            meta: {
+                total,
+                page,
+                limit,
+                search,
+                sortBy,
+                sortOrder,
+                totalPages: Math.ceil(total/limit)
+            }
         };
     };
 
@@ -94,6 +96,15 @@ export class MemberMongoRepository implements MemberRepository {
         }
     }
 
+    async findExistingIds(ids: string[]): Promise<string[]> {
+        const docs = await MemberModel.find(
+            { _id: { $in: ids } },
+            { _id: 1 }
+        ).lean();
+
+        return docs.map((doc: any) => doc._id.toString());
+    }
+
     async update(id: string, data: Partial<Member>): Promise<Member | null> {
         const doc = await MemberModel.findByIdAndUpdate(id, data, { new: true });
         if (!doc) return null;
@@ -106,6 +117,14 @@ export class MemberMongoRepository implements MemberRepository {
             createdAt: doc.createdAt.toISOString()
         };
     };
+
+    async bulkDelete(ids: string[]): Promise<number> {
+        const result = await MemberModel.deleteMany({
+            _id: { $in: ids },
+        });
+
+        return result.deletedCount;
+    }
 
     async delete(id: string): Promise<void> {
         await MemberModel.findByIdAndDelete(id);

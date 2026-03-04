@@ -1,5 +1,4 @@
-export interface PaginationResult<T> {
-    data: T[];
+export interface PaginationMeta{
     total: number;
     page: number;
     limit: number;
@@ -7,4 +6,9 @@ export interface PaginationResult<T> {
     sortBy: string;
     sortOrder: string;
     totalPages: number;
+}
+
+export interface PaginationResult<T> {
+    data: T[];
+    meta: PaginationMeta;
 }
