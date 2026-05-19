@@ -1,5 +1,5 @@
 import { MemberRepository } from "../repositories/member.repository";
-import { QueryOptions } from "../../../presentation/types/query-options.type";
+import { QueryOptions } from "../../types/query-options.type";
 
 export class GetMembersUseCase {
     constructor(private repository: MemberRepository) {};

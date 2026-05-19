@@ -8,7 +8,7 @@ export class DeleteMemberUseCase {
         const existing = await this.repository.findById(id);
 
         if (!existing) {
-            throw new AppError("Cannot find member with id " + id);
+            throw new AppError("Cannot find member with id " + id, 404);
         }
 
         await this.repository.delete(id);
